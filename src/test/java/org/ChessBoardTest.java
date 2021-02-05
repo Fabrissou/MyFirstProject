@@ -1,115 +1,109 @@
 package org;
 
+import org.chesspieces.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ChessBoardTest {
 
     @org.junit.jupiter.api.Test
     void getChessPiece() {
-        ChessBoard chessBoard = new ChessBoard(1, 1, 3, 3);
-        chessBoard.addPiece(4, 1, "knight", "white");
-        chessBoard.addPiece(4, 2, "rook", "black");
+        ChessBoard chessBoard = new ChessBoard(1, 1, 8, 8);
+        chessBoard.addPiece(2, 1, new Rook("white"));
+        chessBoard.addPiece(2, 2, new Knight("black"));
+        chessBoard.addPiece(2, 3, new Queen("white"));
+        chessBoard.addPiece(2, 4, new Pawn("black"));
+        chessBoard.addPiece(2, 5, new Bishop("white"));
 
-        assertEquals("knight white", chessBoard.getChessPiece(4, 1));
-        assertEquals("rook black", chessBoard.getChessPiece(4, 2));
+        assertEquals(new Rook("white"), chessBoard.getChessPiece(2, 1));
+        assertEquals(new Knight("black"), chessBoard.getChessPiece(2, 2));
+        assertEquals(new Queen("white"), chessBoard.getChessPiece(2, 3));
+        assertEquals(new Pawn("black"), chessBoard.getChessPiece(2, 4));
+        assertEquals(new Bishop("white"), chessBoard.getChessPiece(2, 5));
     }
 
     @org.junit.jupiter.api.Test
     void clearField() {
-        ChessBoard chessBoard = new ChessBoard(1, 1, 3, 3);
-        chessBoard.addPiece(4, 1, "knight", "white");
-        chessBoard.addPiece(4, 2, "rook", "black");
-        chessBoard.addPiece(4, 3, "queen", "white");
-        chessBoard.addPiece(4, 4, "bishop", "white");
+        ChessBoard chessBoard = new ChessBoard(1, 1, 8, 8);
+        chessBoard.addPiece(2, 1, new Rook("white"));
+        chessBoard.addPiece(2, 2, new Knight("black"));
+        chessBoard.addPiece(2, 3, new Queen("white"));
+        chessBoard.addPiece(2, 4, new Pawn("black"));
+        chessBoard.addPiece(2, 5, new Bishop("white"));
 
-//      удаление короля:
-        assertEquals("If the king is removed, the game is over", chessBoard.clearField(1, 1));
-//      удаление любой фигуры, кроме короля:
-        assertEquals("Field is empty", chessBoard.clearField(4, 1));
-        assertEquals("Field is empty", chessBoard.clearField(4, 2));
-        assertEquals("Field is empty", chessBoard.clearField(4, 3));
-        assertEquals("Field is empty", chessBoard.clearField(4, 4));
-    }
+        chessBoard.clearField(2, 1);
+        chessBoard.clearField(2, 2);
+        chessBoard.clearField(2, 3);
+        chessBoard.clearField(2, 4);
+        chessBoard.clearField(2, 5);
+
+        assertNull(chessBoard.getChessPiece(2, 1));
+        assertNull(chessBoard.getChessPiece(2, 2));
+        assertNull(chessBoard.getChessPiece(2, 3));
+        assertNull(chessBoard.getChessPiece(2, 4));
+        assertNull(chessBoard.getChessPiece(2, 5));
+
+        assertThrows(IllegalArgumentException.class, ()->{ chessBoard.clearField(1, 1);});
+        assertThrows(IllegalArgumentException.class, ()->{ chessBoard.clearField(8, 8);});
+
+        assertThrows(IllegalArgumentException.class, ()->{ chessBoard.clearField(8, 8);});
+        assertThrows(IllegalArgumentException.class, ()->{ chessBoard.clearField(8, 8);});
+}
 
     @org.junit.jupiter.api.Test
     void addPiece() {
-        ChessBoard chessBoard = new ChessBoard(1, 1, 1, 8);
-        chessBoard.addPiece(8, 1, "rook", "white");
-        chessBoard.addPiece(8, 2, "rook", "black");
-        chessBoard.addPiece(8, 3, "pawn", "white");
-        chessBoard.addPiece(8, 4, "knight", "black");
-        chessBoard.addPiece(8, 5, "queen", "black");
-        chessBoard.addPiece(8, 6, "bishop", "white");
-        chessBoard.addPiece(8, 7, "knight", "white");
-        chessBoard.addPiece(8, 8, "pawn", "white");
+        ChessBoard chessBoard = new ChessBoard(1, 1, 8, 8);
 
-//        создание любой фигуры:
-        assertEquals("rook white", chessBoard.getChessPiece(8, 1));
-        assertEquals("rook black", chessBoard.getChessPiece(8, 2));
-        assertEquals("pawn white", chessBoard.getChessPiece(8, 3));
-        assertEquals("knight black", chessBoard.getChessPiece(8, 4));
-        assertEquals("queen black", chessBoard.getChessPiece(8, 5));
-        assertEquals("bishop white", chessBoard.getChessPiece(8, 6));
-        assertEquals("knight white", chessBoard.getChessPiece(8, 7));
-        assertEquals("pawn white", chessBoard.getChessPiece(8, 8));
-//        создание короля:
-        assertEquals("You can't add a king", chessBoard.addPiece(7, 1, "king", "white"));
-        assertEquals("You can't add a king", chessBoard.addPiece(7, 4, "king", "black"));
+        chessBoard.addPiece(3, 1, new Rook("white"));
+        chessBoard.addPiece(3, 2, new Knight("black"));
+        chessBoard.addPiece(3, 3, new Bishop("white"));
+        chessBoard.addPiece(3, 4, new Queen("white"));
 
+        assertEquals(new Rook("white"), chessBoard.getChessPiece(3, 1));
+        assertEquals(new Knight("black"), chessBoard.getChessPiece(3, 2));
+        assertEquals(new Bishop("white"), chessBoard.getChessPiece(3, 3));
+        assertEquals(new Queen("white"), chessBoard.getChessPiece(3, 4));
 
-//        тест на счетчик пешек:
-        chessBoard.addPiece(1, 1, "pawn", "black");
-        chessBoard.addPiece(1, 2, "pawn", "black");
-        chessBoard.addPiece(1, 3, "pawn", "black");
-        chessBoard.addPiece(1, 4, "pawn", "black");
-        chessBoard.addPiece(1, 5, "pawn", "black");
-        chessBoard.addPiece(1, 6, "pawn", "black");
-        chessBoard.addPiece(1, 7, "pawn", "black");
-        chessBoard.addPiece(1, 8, "pawn", "black");
+        assertThrows(IllegalArgumentException.class, ()->{ chessBoard.addPiece(1, 8, new King("black"));});
+        assertThrows(IllegalArgumentException.class, ()->{ chessBoard.addPiece(5, 8, new King("white"));});
 
-//        добавляем девятую черную пешку:
-        assertEquals("Please, read the rules of the game of chess...", chessBoard.addPiece(2, 1, "pawn", "black"));
+        assertThrows(IllegalArgumentException.class, ()->{ chessBoard.addPiece(3, 1, new Pawn("white"));});
+        assertThrows(IllegalArgumentException.class, ()->{ chessBoard.addPiece(3, 2, new Bishop("white"));});
 
-//        удаление одной пешки и добавление новой:
-        chessBoard.clearField(1, 8);
-        assertEquals("Field is empty", chessBoard.getChessPiece(1, 8));
-        chessBoard.addPiece(2, 2, "pawn", "black");
-        assertEquals("pawn black", chessBoard.getChessPiece(2, 2));
+        chessBoard.addPiece(4, 1, new Pawn("white"));
+        chessBoard.addPiece(4, 2, new Pawn("white"));
+        chessBoard.addPiece(4, 3, new Pawn("white"));
+        chessBoard.addPiece(4, 4, new Pawn("white"));
+        chessBoard.addPiece(4, 5, new Pawn("white"));
+        chessBoard.addPiece(4, 6, new Pawn("white"));
+        chessBoard.addPiece(4, 7, new Pawn("white"));
+        chessBoard.addPiece(4, 8, new Pawn("white"));
+
+        assertThrows(IllegalArgumentException.class, ()->{ chessBoard.addPiece(5, 1, new Pawn("white"));});
+
+        chessBoard.clearField(4, 1);
+        chessBoard.addPiece(5, 1, new Pawn("white"));
     }
 
 
     @org.junit.jupiter.api.Test
     void moveTheChessPiece() {
-        ChessBoard chessBoard = new ChessBoard(1, 1, 1, 8);
+        ChessBoard chessBoard = new ChessBoard(2, 2, 2, 8);
 
-//        перемещение любой фигуры:
-        chessBoard.addPiece(4, 1, "rook", "white");
-        assertEquals("rook white", chessBoard.getChessPiece(4, 1));
-        assertEquals("Field is empty", chessBoard.getChessPiece(4, 2));
-        chessBoard.moveTheChessPiece(4,1, 4, 2);
-        assertEquals("Field is empty", chessBoard.getChessPiece(4, 1));
-        assertEquals("rook white", chessBoard.getChessPiece(4, 2));
+        chessBoard.addPiece(1, 1, new Pawn("black"));
+        assertEquals(new Pawn("black"), chessBoard.getChessPiece(1, 1));
+        assertNull(chessBoard.getChessPiece(1, 6));
+        chessBoard.moveTheChessPiece(1, 1, 1, 6);
+        assertEquals(new Pawn("black"), chessBoard.getChessPiece(1, 6));
+        assertNull(chessBoard.getChessPiece(1, 1));
 
-//        перемещение любой фигуры:
-        chessBoard.addPiece(8, 3, "pawn", "black");
-        assertEquals("pawn black", chessBoard.getChessPiece(8, 3));
-        assertEquals("Field is empty", chessBoard.getChessPiece(8, 8));
-        chessBoard.moveTheChessPiece(8,3, 8, 8);
-        assertEquals("Field is empty", chessBoard.getChessPiece(8, 3));
-        assertEquals("pawn black", chessBoard.getChessPiece(8, 8));
+        chessBoard.moveTheChessPiece(2, 2, 5, 5);
+        assertEquals(new King("white"), chessBoard.getChessPiece(5, 5));
+        assertNull(chessBoard.getChessPiece(2, 2));
 
-//        перемещение короля:
-        assertEquals("king white", chessBoard.getChessPiece(1, 1));
-        assertEquals("Field is empty", chessBoard.getChessPiece(1, 4));
-        chessBoard.moveTheChessPiece(1,1, 1, 4);
-        assertEquals("Field is empty", chessBoard.getChessPiece(1, 1));
-        assertEquals("king white", chessBoard.getChessPiece(1, 4));
 
-//        перемещение короля на соседнюю клетку от другого короля:
-        assertEquals("king white", chessBoard.getChessPiece(1, 4));
-        assertEquals("Field is empty", chessBoard.getChessPiece(1, 7));
-        chessBoard.moveTheChessPiece(1,4, 1, 7);
-        assertEquals("Field is empty", chessBoard.getChessPiece(1, 7));
+        assertThrows(IllegalArgumentException.class, ()->{ chessBoard.moveTheChessPiece(5, 5, 2, 7); });
+
     }
 
 
@@ -118,16 +112,15 @@ class ChessBoardTest {
     void kingThreat() {
         ChessBoard chessBoard = new ChessBoard(4, 4, 1, 8);
 
-
-//        королю никто не угражает:
+        //        королю никто не угражает:
         assertFalse(chessBoard.kingThreat(4, 4));
 
 //        добавление фигуры ТОГО ЖЕ цвета на место потенциальной угрозы:
-        chessBoard.addPiece(5, 6, "knight", "white");
+        chessBoard.addPiece(5, 6, new Knight("white"));
         assertFalse(chessBoard.kingThreat(4, 4));
 
 //        королю угрожает конь:
-        chessBoard.addPiece(5, 2, "knight", "black");
+        chessBoard.addPiece(5, 2, new Knight("black"));
         assertTrue(chessBoard.kingThreat(4, 4));
 //        удаление коня, проверка угрозы:
         chessBoard.clearField(5, 2);
@@ -135,32 +128,30 @@ class ChessBoardTest {
 
 
 //        угроза ферзем "в лоб"
-        chessBoard.addPiece(1, 4, "queen", "black");
+        chessBoard.addPiece(1, 4, new Queen("black"));
         assertTrue(chessBoard.kingThreat(4, 4));
         chessBoard.clearField(1, 4);
 
 //        угроза ферзем по диагонали:
-        chessBoard.addPiece(8, 8, "queen", "black");
+        chessBoard.addPiece(8, 8, new Queen("black"));
         assertTrue(chessBoard.kingThreat(4, 4));
         chessBoard.clearField(8, 8);
 
 //        угроза слоном:
-        chessBoard.addPiece(1, 1, "bishop", "black");
+        chessBoard.addPiece(1, 1, new Bishop("black"));
         assertTrue(chessBoard.kingThreat(4, 4));
         chessBoard.clearField(1, 1);
 
 //        угроза ладьей:
-        chessBoard.addPiece(4, 8, "rook", "black");
+        chessBoard.addPiece(4, 8, new Rook("black"));
         assertTrue(chessBoard.kingThreat(4, 4));
         chessBoard.clearField(4, 8);
 
         //        угроза пешкой:
-        chessBoard.addPiece(3, 3, "pawn", "black");
+        chessBoard.addPiece(3, 3, new Pawn("black"));
         assertTrue(chessBoard.kingThreat(4, 4));
         chessBoard.clearField(3, 3);
     }
-
-
 
 
 

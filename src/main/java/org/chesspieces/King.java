@@ -4,6 +4,6 @@ package org.chesspieces;
 
 public class King extends ChessPiece {
     public King(String color) {
-        super(color, "king");
+        super(color);
     }
 }

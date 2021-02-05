@@ -3,8 +3,8 @@ package org.chesspieces;
 //    Ладья
 
 public class Rook extends ChessPiece {
-    public Rook(String color, String name) {
-        super(color, name);
+    public Rook(String color) {
+        super(color);
     }
 
 

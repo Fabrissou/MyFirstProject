@@ -3,8 +3,8 @@ package org.chesspieces;
 //    Конь
 
 public class Knight extends ChessPiece {
-    public Knight(String color, String name) {
-        super(color, name);
+    public Knight(String color) {
+        super(color);
     }
 
     @Override

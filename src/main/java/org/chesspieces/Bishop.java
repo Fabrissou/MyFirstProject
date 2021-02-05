@@ -3,8 +3,8 @@ package org.chesspieces;
 //    Слон.
 
 public class Bishop extends ChessPiece {
-    public Bishop(String color, String name) {
-        super(color, name);
+    public Bishop(String color) {
+        super(color);
     }
 
     @Override
