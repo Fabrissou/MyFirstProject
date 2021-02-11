@@ -9,8 +9,8 @@ public class Rook extends ChessPiece {
 
 
     @Override
-    public boolean killKing(int kingX, int kingY, int i, int j, String color) {
-        return ((8 - kingX == i) || (kingY - 1 == j)) && (!color.equals(this.color));
+    public boolean killKing(int kingX, int kingY, int i, int j) {
+        return ((8 - kingX == i) || (kingY - 1 == j));
     }
 
 }

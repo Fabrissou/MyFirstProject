@@ -59,11 +59,7 @@ public class ChessBoard {
     //    вспомогательный метод для тестов. Получает название и цвет фигуры по координатам
     public ChessPiece getChessPiece(int x, int y) {
         checkCoordinates(x, y);
-        if (chessBoard[8 - x][y - 1] != null) {
-            return chessBoard[8 - x][y - 1];
-        } else {
-            return null;
-        }
+        return chessBoard[8 - x][y - 1];
     }
 
     //    очистка поля. Сделана защита от удаления короля. 60 строчка нужна для контроля количества пешек данного цвета
@@ -146,12 +142,16 @@ public class ChessBoard {
 
     public boolean kingThreat(int kingX, int kingY) {
         checkCoordinates(kingX, kingY);
-        if (chessBoard[8 - kingX][kingY - 1] instanceof King) {
-            String color = chessBoard[8 - kingX][kingY - 1].getColor();
+        ChessPiece kingPiece = chessBoard[8 - kingX][kingY - 1];
+
+        if (kingPiece instanceof King) {
+            String color = kingPiece.getColor();
             for (int i = 0; i <= 7; i++) {
                 for (int j = 0; j <= 7; j++) {
-                    if ((chessBoard[i][j] != null) && (!(chessBoard[i][j] instanceof King))) {
-                        if (chessBoard[i][j].killKing(kingX, kingY, i, j, color)) return true;
+                    ChessPiece currentPiece = chessBoard[i][j];
+                    if ((currentPiece != null) && (!(currentPiece instanceof King))
+                            && (!currentPiece.getColor().equals(color))) {
+                        if (currentPiece.killKing(kingX, kingY, i, j)) return true;
                     }
                 }
             }

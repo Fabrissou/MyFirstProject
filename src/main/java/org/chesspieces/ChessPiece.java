@@ -10,7 +10,7 @@ public abstract class ChessPiece {
 
     public ChessPiece(String color) {
         if ((("white".equals(color))) || ("black".equals(color))) {
-            this.color = color.toLowerCase();
+            this.color = color;
         } else throw new IllegalArgumentException("Something went wrong");
     }
 
@@ -31,7 +31,7 @@ public abstract class ChessPiece {
 
     public String getColor() { return color; }
 
-    public boolean killKing(int kingX, int kingY, int i, int j, String color) {
+    public boolean killKing(int kingX, int kingY, int i, int j) {
         return false;
     }
 }

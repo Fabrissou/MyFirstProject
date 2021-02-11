@@ -8,9 +8,8 @@ public class Queen extends ChessPiece {
     }
 
     @Override
-    public boolean killKing(int kingX, int kingY, int i, int j, String color) {
-        return ((!color.equals(this.color))
-                && (((8 - kingX == i) || (kingY - 1 == j))
-                || (Math.abs(8 - kingX - i) == Math.abs(kingY - 1 - j))));
+    public boolean killKing(int kingX, int kingY, int i, int j) {
+        return (((8 - kingX == i) || (kingY - 1 == j))
+                || (Math.abs(8 - kingX - i) == Math.abs(kingY - 1 - j)));
     }
 }
